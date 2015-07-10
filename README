@@ -1,0 +1,13 @@
+
+RECETTES
+********
+
+Application pour gérer ces recettes.
+
+dossiers
+--------
+public : images, fonts, etc. accessibles depuis /
+client : css et js partie client
+
+
+
