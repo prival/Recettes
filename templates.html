@@ -1,0 +1,38 @@
+
+<template name="addRecette">
+  <div class="row">
+      <div class="col-lg-11">
+          <h1 class="page-header">{{titreNewRecette}}</h1>
+          <form class="new-recette">
+            <label>Titre de la recette</label>
+            <input class="form-control" name="titre" placeholder="Titre de la recette">
+            <br>
+            <label>Description</label>
+            <textarea class="form-control" name="description" rows="3"></textarea>
+            <button type="submit" class="btn btn-success btn-lg sharp">Enregistrer</button>
+          </form>
+
+      </div>
+      <!-- /.col-lg -->
+  </div>
+</template>
+
+<template name="Recette">
+  <div class="row">
+      <div class="col-lg-11">
+  <label>Titre</label>
+  <br>
+<label>{{titre}}</label>
+  <br>
+  <br>
+  <label>Description</label>
+  <br>
+<label>{{description}}</label>
+
+      </div>
+      <!-- /.col-lg -->
+  </div>
+  <div>
+    <button type="submit" class="btn btn-danger btn-lg sharp delete">Supprimer</button>
+  </div>
+</template>

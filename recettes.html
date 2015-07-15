@@ -1,111 +1,94 @@
 <head>
-  
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Recettes</title>
 
-    <!-- Core CSS - Include with every page -->
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <!-- Page-Level Plugin CSS - Dashboard -->
     <link href="css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
-    <link href="css/plugins/timeline/timeline.css" rel="stylesheet">
-
-    <!-- SB Admin CSS - Include with every page -->
     <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <div id="wrapper">
-
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">Recettes</a>
-            </div>
-<div class="navbar-right dropdown">
-				<form class="new-recette">
-					<span class="navbar-brand">Ajouter une recette</span>
-					<button type="button" class="btn btn-danger btn-lg sharp dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Apéritif</button>
-<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-					<button type="button" class="btn btn-primary btn-lg sharp">Entrée</button>
-					<button type="button" class="btn btn-success btn-lg sharp">Plat</button>
-					<button type="button" class="btn btn-warning btn-lg sharp">Dessert</button>
-&nbsp;
-				</form>
-</div>
-
-
-            <!-- /.navbar-header -->
-
-            <div class="navbar-default navbar-static-side" role="navigation">
-                <div class="sidebar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="#">Aperitifs<span class="fa arrow"></span></a>
-                            <ul id="aperitifs-menu" class="nav nav-second-level">
-								{{#each recettes}}
-									{{> recette}}
-								{{/each}}
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Entrées<span class="fa arrow"></span></a>
-                            <ul id="entrees-menu" class="nav nav-second-level">
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Plats<span class="fa arrow"></span></a>
-                            <ul id="plats-menu" class="nav nav-second-level">
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#">Desserts<span class="fa arrow"></span></a>
-                            <ul id="desserts-menu" class="nav nav-second-level">
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- /#side-menu -->
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Ajouter une recette</h1>
-					<form class="new-recette">
-						<button type="button" class="btn btn-danger btn-lg sharp">Apéritif</button>
-						<button type="button" class="btn btn-primary btn-lg sharp">Entrée</button>
-						<button type="button" class="btn btn-success btn-lg sharp">Plat</button>
-						<button type="button" class="btn btn-warning btn-lg sharp">Dessert</button>
-						<br>
-						<br>
-						<input type="text" name="titre" placeholder="Titre de la recette" />
-					</form>
-
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /#page-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-
 </body>
+
+<template name="mainLayout">
+
+      <div id="wrapper">
+
+          <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+              <div class="navbar-header">
+                  <a class="navbar-brand" href="index.html">Recettes</a>
+              </div>
+              <div class="navbar-right dropdown">
+              				<form class="new-recette">
+              					<span class="navbar-brand">Ajouter une recette</span>
+              					<button type="button" id="btn-aperitif" class="btn btn-danger btn-lg sharp">Apéritif</button>
+              					<button type="button" id="btn-entree" class="btn btn-primary btn-lg sharp">Entrée</button>
+              					<button type="button" id="btn-plat" class="btn btn-success btn-lg sharp">Plat</button>
+              					<button type="button" id="btn-dessert" class="btn btn-warning btn-lg sharp">Dessert</button>
+                        &nbsp;
+              				</form>
+              </div>
+
+              <!-- /.navbar-header -->
+
+              <div class="navbar-default navbar-static-side" role="navigation">
+                  <div class="sidebar-collapse">
+                      <ul class="nav" id="side-menu">
+                          <li>
+                              <a href="#">Aperitifs<span class="fa arrow"></span></a>
+                              <ul id="aperitifs-menu" class="nav nav-second-level">
+              								{{#each aperitifs}}
+              									{{> recette}}
+              								{{/each}}
+                              </ul>
+                          </li>
+                          <li>
+                              <a href="#">Entrées<span class="fa arrow"></span></a>
+                              <ul id="entrees-menu" class="nav nav-second-level">
+              								{{#each entrees}}
+              									{{> recette}}
+              								{{/each}}
+                              </ul>
+                          </li>
+                          <li>
+                              <a href="#">Plats<span class="fa arrow"></span></a>
+                              <ul id="plats-menu" class="nav nav-second-level">
+              								{{#each plats}}
+              									{{> recette}}
+              								{{/each}}
+                              </ul>
+                          </li>
+                          <li>
+                              <a href="#">Desserts<span class="fa arrow"></span></a>
+                              <ul id="desserts-menu" class="nav nav-second-level">
+              								{{#each desserts}}
+              									{{> recette}}
+              								{{/each}}
+                              </ul>
+                          </li>
+                      </ul>
+                      <!-- /#side-menu -->
+                  </div>
+                  <!-- /.sidebar-collapse -->
+              </div>
+              <!-- /.navbar-static-side -->
+          </nav>
+
+          <div id="page-wrapper">
+            {{> yield}}
+          </div>
+          <!-- /#page-wrapper -->
+
+      </div>
+      <!-- /#wrapper -->
+</template>
 
 <template name="recette">
   <li>
-    <a href="#">{{titre}}</a>
+    <a href="{{pathFor 'recette' _id=this._id }}">{{titre}}</a>
   </li>
 </template>
