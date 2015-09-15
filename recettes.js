@@ -104,7 +104,15 @@ if (Meteor.isClient) {
 		event.target.description.value = "";
 
     return false;
-    }
+	},
+
+		'click #button-add' : function(event){
+			var newInc = $('#tbody-ingredients input').length + 1;
+			$('#tbody-ingredients').append('<tr>'
+								+ '<td><img src="img/remove.png" style="width:20%;height:20%;cursor:pointer;" /></td>'
+								+ '<td><input class="form-control" name="ingredient-'+newInc+'" placeholder="nouvel ingrédient" style="width:700px;"></td>'
+							  + '</tr>');
+		}
 	});
 
 

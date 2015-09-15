@@ -4,11 +4,26 @@
       <div class="col-lg-11">
           <h1 class="page-header">{{titreNewRecette}}</h1>
           <form class="new-recette">
-            <label>Titre de la recette</label>
-            <input class="form-control" name="titre" placeholder="Titre de la recette">
             <br>
+            <label>Titre</label>
+            <input class="form-control" name="titre" placeholder="Donnez ici le titre de votre nouvelle recette !" style="width:700px;">
+            <br><br>
             <label>Description</label>
-            <textarea class="form-control" name="description" rows="3"></textarea>
+            <textarea class="form-control" name="description" placeholder="Décriver ici la recette de façon succinte." rows="5" style="width:700px;"></textarea>
+            <hr>
+            <br>
+            <label>Ingrédients</label>
+            <img id="button-add" src="img/add.png" style="width:4%;height:4%;cursor:pointer;" />
+            <br><br>
+            <table>
+              <tbody id="tbody-ingredients">
+                <tr>
+                  <td></td>
+                  <td><input class="form-control" name="ingredient-1" placeholder="nouvel ingrédient" style="width:700px;"></td>
+                </tr>
+              </tbody>
+            </table>
+            <br><br>
             <button type="submit" class="btn btn-success btn-lg sharp">Enregistrer</button>
           </form>
 
