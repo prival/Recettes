@@ -7,8 +7,8 @@ Router.route('/', function () {
   this.render('firstPage');
 });
 
-Router.route('/addRecette', function () {
-  this.render('addRecette');
+Router.route('/createRecette', function () {
+  this.render('createRecette');
 });
 
 Router.route('/recette/:_id', function () {

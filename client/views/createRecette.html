@@ -1,5 +1,4 @@
-
-<template name="addRecette">
+<template name="createRecette">
   <div class="row">
       <div class="col-lg-11">
           <h1 class="page-header">{{titreNewRecette}}</h1>
@@ -13,13 +12,28 @@
             <hr>
             <br>
             <label>Ingrédients</label>
-            <img id="button-add" src="img/add.png" style="width:4%;height:4%;cursor:pointer;" />
+			<br>
+            <span id="button-add-ingredient" style="cursor:pointer;"><img src="img/add.png" style="width:2%;height:2%;padding:5px;" />Ajouter un ingrédient</span>
             <br><br>
             <table>
               <tbody id="tbody-ingredients">
                 <tr>
+                  <td><input class="form-control" name="ingredient" placeholder="nouvel ingrédient" style="width:700px;"></td>
                   <td></td>
-                  <td><input class="form-control" name="ingredient-1" placeholder="nouvel ingrédient" style="width:700px;"></td>
+                </tr>
+              </tbody>
+            </table>
+            <hr>
+            <br>
+            <label>Etapes</label>
+			<br>
+            <span id="button-add-etape" style="cursor:pointer;"><img src="img/add.png" style="width:2%;height:2%;padding:5px;" />Ajouter une étape</span>
+            <br><br>
+            <table>
+              <tbody id="tbody-etapes">
+                <tr>
+                  <td><input class="form-control" name="etape" placeholder="Nouvelle étape" style="width:700px;"></td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
@@ -29,25 +43,5 @@
 
       </div>
       <!-- /.col-lg -->
-  </div>
-</template>
-
-<template name="Recette">
-  <div class="row">
-      <div class="col-lg-11">
-  <label>Titre</label>
-  <br>
-<label>{{titre}}</label>
-  <br>
-  <br>
-  <label>Description</label>
-  <br>
-<label>{{description}}</label>
-
-      </div>
-      <!-- /.col-lg -->
-  </div>
-  <div>
-    <button type="submit" class="btn btn-danger btn-lg sharp delete">Supprimer</button>
   </div>
 </template>
