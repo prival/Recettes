@@ -7,10 +7,6 @@ Router.route('/', function () {
   this.render('firstPage');
 });
 
-Router.route('/createRecette', function () {
-  this.render('createRecette');
-});
-
 Router.route('/recette/:_id', function () {
 
 this.render('Recette', {
@@ -20,4 +16,12 @@ this.render('Recette', {
 });
 },{
   name: 'recette'
+});
+
+Router.route('/createRecette', function () {
+  this.render('createRecette');
+});
+
+Router.route('/displayIngredients, function () {
+  this.render('displayIngredients');
 });

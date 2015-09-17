@@ -1,5 +1,6 @@
 
 Recettes = new Mongo.Collection("recettes");
+Ingredients = new Mongo.Collection("ingredients");
 
 if (Meteor.isClient) {
   	// This code only runs on the client
@@ -40,6 +41,13 @@ if (Meteor.isClient) {
   	}
   });
 
+	Template.displayIngredients.helpers({
+
+  	ingredients: function () {
+    		return Ingredients.find();
+  	}
+  });
+
   Template.mainLayout.events({
 		"click #btn-aperitif": function (event) {
 
@@ -60,6 +68,10 @@ if (Meteor.isClient) {
 
 			Session.set('type_recette', 'Dessert');
 			Router.go('createRecette');
+		},
+		"click #btn-ingredients": function (event) {
+
+			Router.go('displayIngredients');
 		}
 	});
 

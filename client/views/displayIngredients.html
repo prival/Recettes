@@ -1,0 +1,13 @@
+<template name="displayIngredients">
+  <div class="row">
+      <div class="col-lg-11">
+          <h1 class="page-header">Tous les ingrédients</h1>
+          
+			{{#each ingredients}}
+				{{> ingredient}}
+			{{/each}}
+
+      </div>
+      <!-- /.col-lg -->
+  </div>
+</template>
