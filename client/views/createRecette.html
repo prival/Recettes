@@ -2,7 +2,7 @@
   <div class="row">
       <div class="col-lg-11">
           <h1 class="page-header">{{titreNewRecette}}</h1>
-          <form class="new-recette">
+          <form id="new-recette">
             <br>
             <label>Titre</label>
             <input class="form-control" name="titre" placeholder="Donnez ici le titre de votre nouvelle recette !" style="width:700px;">
@@ -12,8 +12,8 @@
             <hr>
             <br>
             <label>Ingrédients</label>
-			<br>
-            <span id="button-add-ingredient" style="cursor:pointer;"><img src="img/add.png" style="width:2%;height:2%;padding:5px;" />Ajouter un ingrédient</span>
+			         <br>
+            <span id="button-add-ingredient" style="cursor:pointer;"><img src="/img/add.png" style="width:2%;height:2%;padding:5px;" />Ajouter un ingrédient</span>
             <br><br>
             <table>
               <tbody id="tbody-ingredients">
@@ -26,8 +26,8 @@
             <hr>
             <br>
             <label>Etapes</label>
-			<br>
-            <span id="button-add-etape" style="cursor:pointer;"><img src="img/add.png" style="width:2%;height:2%;padding:5px;" />Ajouter une étape</span>
+			         <br>
+            <span id="button-add-etape" style="cursor:pointer;"><img src="/img/add.png" style="width:2%;height:2%;padding:5px;" />Ajouter une étape</span>
             <br><br>
             <table>
               <tbody id="tbody-etapes">
@@ -37,6 +37,15 @@
                 </tr>
               </tbody>
             </table>
+            <hr>
+            <br>
+            <label>Ajouter une photo :</label>
+			         <br>
+               <br>
+               <input type="file" name="imageFile" accept="image/*" multiple />
+            <br><br>
+            <div id="drop_zone">Ou déplacez les images ici</div>
+            <output id="list"></output>
             <br><br>
             <button type="submit" class="btn btn-success btn-lg sharp">Enregistrer</button>
           </form>

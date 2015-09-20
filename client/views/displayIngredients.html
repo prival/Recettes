@@ -2,12 +2,37 @@
   <div class="row">
       <div class="col-lg-11">
           <h1 class="page-header">Tous les ingrédients</h1>
-          
+
 			{{#each ingredients}}
 				{{> ingredient}}
 			{{/each}}
 
+      <hr>
+
+      <form id="form-new-ingredient">
+        <table id="table-new-ingredient">
+          <tbody>
+            <tr>
+        <td>Ajouter un ingrédient :</td>
+        <td><input type="text" id="input-new-ingredient" name="libelle" placeholder="Nouvel ingrédient" style="" /></td>
+        <td><span id="alert-ingredient" class="color-red" style="display:none;">Cet ingrédient existe déjà !</span></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button type="submit" id="submit-new-ingredient" class="btn btn-success btn-log sharp" style="float:right;">Ajouter !</button></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+      </form>
       </div>
       <!-- /.col-lg -->
+  </div>
+</template>
+
+<template name="ingredient">
+  <div style="margin-top:5px;">
+    <img class="button-remove" src="/img/remove.png" style="cursor:pointer;" />
+    <a href="{{pathFor 'ingredient' _id=this._id }}">{{libelle}}</a>
   </div>
 </template>

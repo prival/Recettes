@@ -1,14 +1,13 @@
-<template name="recette">
+<template name="displayRecette">
   <div class="row">
       <div class="col-lg-11">
-  <label>Titre</label>
+
+<h1 class="page-header">{{titre}}</h1>
   <br>
-<label>{{titre}}</label>
-  <br>
-  <br>
-  <label>Description</label>
-  <br>
+  <img src="{{binary}}" />
+  <br><br>
 <label>{{description}}</label>
+<br><br>
 
       </div>
       <!-- /.col-lg -->
