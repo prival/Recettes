@@ -1,6 +1,7 @@
 if (Meteor.isClient) {
   	// This code only runs on the client
 
+    /* Partie dataTransfer drag drop */
     // files du dataTransfer
     var files;
 
@@ -34,6 +35,7 @@ if (Meteor.isClient) {
       dropZone.addEventListener('drop', handleFileSelect, false);
   	};
 
+
     Template.createRecette.helpers({
 
   			titreNewRecette: function() {
@@ -52,8 +54,12 @@ if (Meteor.isClient) {
   				else if (typeRecette==='Dessert') {
   					return 'Ajouter un dessert';
   				}
+          else {
+            Router.go('/');
+          }
   			}
   	});
+    
 
   	Template.createRecette.events({
 
@@ -65,7 +71,7 @@ if (Meteor.isClient) {
       var file = event.target.imageFile.files[0];
 
       // drop zone
-      if (file == undefined)
+      if (file == undefined && files != undefined)
         file = files[0];
 
       var reader = new FileReader();
@@ -74,13 +80,7 @@ if (Meteor.isClient) {
 
           var result = this.result //assign the result, if you console.log(result), you get {}
           //var buffer = new Uint8Array(result) // convert to binary
-    		Recettes.insert({
-    			titre: event.target.titre.value,
-    			description: event.target.description.value,
-    			type: typeName,
-          binary: result,
-    			createdAt: new Date()
-    		});
+          Meteor.call("saveRecette", event.target.titre.value, event.target.description.value, typeName, result);
 
         alert('Recette créée !');
 
@@ -91,12 +91,8 @@ if (Meteor.isClient) {
       if (file != undefined)
         reader.readAsDataURL(file);
       else { // TODO: code redondant...
-        Recettes.insert({
-    			titre: event.target.titre.value,
-    			description: event.target.description.value,
-    			type: typeName,
-    			createdAt: new Date()
-    		});
+
+      Meteor.call("saveRecette", event.target.titre.value, event.target.description.value, typeName, null);
 
         alert('Recette créée !');
 

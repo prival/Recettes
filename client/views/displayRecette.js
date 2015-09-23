@@ -6,7 +6,7 @@ if (Meteor.isClient) {
       'click .delete' : function(){
 
   			if (confirm('Confirmer ?'))
-  				Recettes.remove(this._id);
+  				Meteor.call('deleteRecette', this._id);
       }
   	});
 }

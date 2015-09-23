@@ -11,16 +11,19 @@ if (Meteor.isClient) {
 
   Template.displayIngredients.events({
 
+		// coloriage
     'mouseenter .button-remove' : function(event){
   		$(event.target).parent().css('background-color','#ff5050');
   	},
     'mouseleave .button-remove' : function(event){
   		$(event.target).parent().css('background-color','#ffffff');
   	},
+		// supprime ingrédient
     'click .button-remove' : function(event){
-  		Ingredients.remove(this._id);
+  		Meteor.call('deleteIngredient',this._id);
       alert('Ingrédient supprimé !');
   	},
+		// affiche si ingrédient existe déjà
     'keyup #input-new-ingredient' : function(event){
 
       if (Ingredients.findOne({libelle: event.target.value})) {
@@ -33,12 +36,10 @@ if (Meteor.isClient) {
       }
     },
 
+		// save ingrédient
     'submit #form-new-ingredient' : function(){
 
-      Ingredients.insert({
-  			libelle: event.target.libelle.value,
-  			createdAt: new Date()
-  		});
+			Meteor.call('saveIngredient', event.target.libelle.value);
 
       event.target.libelle.value = "";
 

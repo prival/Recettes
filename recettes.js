@@ -27,7 +27,7 @@ if (Meteor.isClient) {
 
 	Template.mainLayout.helpers({
 
-		// menu
+		// populate le menu
   	aperitifs: function () {
     		return Recettes.find({type: "Apéritif"});
   	},
@@ -42,6 +42,7 @@ if (Meteor.isClient) {
   	}
   });
 
+	// routes
   Template.mainLayout.events({
 		"click #btn-aperitif": function (event) {
 
@@ -68,11 +69,4 @@ if (Meteor.isClient) {
 			Router.go('displayIngredients');
 		}
 	});
-}
-
-
-if (Meteor.isServer) {
-  	Meteor.startup(function () {
-    	// code to run on server at startup
-  	});
 }

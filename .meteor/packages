@@ -6,3 +6,5 @@
 
 meteor-platform
 iron:router
+sanjo:jasmine
+velocity:html-reporter
