@@ -7,10 +7,12 @@
           <form id="new-recette">
             <br>
             <label>Titre</label>
-            <input class="form-control" name="titre" placeholder="Donnez ici le titre de votre nouvelle recette !" style="width:700px;">
+            <input class="form-control" id="titre" name="titre" placeholder="Donnez ici le titre de votre nouvelle recette !" style="width:700px;">
+            <span id="error-titre" class="color-red"></span>
             <br><br>
             <label>Description</label>
-            <textarea class="form-control" name="description" placeholder="Décriver ici la recette de façon succinte." rows="5" style="width:700px;"></textarea>
+            <textarea class="form-control" id="description" name="description" placeholder="Décriver ici la recette de façon succinte." rows="5" style="width:700px;"></textarea>
+            <span id="error-description" class="color-red"></span>
             <hr>
             <br>
             <label>Ingrédients</label>

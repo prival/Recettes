@@ -1,20 +1,20 @@
-if (Meteor.isServer) {
+Meteor.publish("ingredients", function() {
+  return Ingredients.find();
+});
 
-  Meteor.publish("ingredients", function() {
-    return Ingredients.find();
-  });
+Meteor.methods({
 
-  Meteor.methods({
-    saveIngredient: function(libelle) {
-      console.log('test');
+  saveIngredient: function(ingredient) {
+    if (!validatedData.errors) {
+      ingredient = ingredient.recette;
       Ingredients.insert({
-        libelle: libelle,
+        libelle: ingredient.libelle,
         createdAt: new Date()
       });
-    },
-
-    deleteIngredient: function(id) {
-      Ingredients.remove(id);
     }
-  });
-}
+  },
+
+  deleteIngredient: function(id) {
+    Ingredients.remove(id);
+  }
+});

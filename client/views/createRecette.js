@@ -59,61 +59,98 @@ if (Meteor.isClient) {
           }
   			}
   	});
-    
+
 
   	Template.createRecette.events({
 
       'submit #new-recette' : function(event){
 
-  		var typeName = Session.get("type_recette");
+          event.preventDefault();
 
-      // TODO: une seule image pour l'instant...
-      var file = event.target.imageFile.files[0];
+          var recette = {
+            typeRecette: Session.get("type_recette"),
+            titre: event.target.titre.value,
+            description: event.target.description.value
+          };
 
-      // drop zone
-      if (file == undefined && files != undefined)
-        file = files[0];
+          // validation côté client et serveur
+          var validatedData = Recettes.validate(recette);
 
-      var reader = new FileReader();
+          if (validatedData.errors) {
+            $("#error-titre").html('');
+            $("#error-description").html('');
+            var isFocused = false;
 
-      reader.onload = function(evt){
+            if (validatedData.errors['titre']) {
+              $("#error-titre").html(validatedData.errors['titre']);
+              isFocused = true;
+              $("#titre").focus();
+            }
+            if (validatedData.errors['description']) {
+              $("#error-description").html(validatedData.errors['description']);
+              if (!isFocused) {
+                isFocused = true;
+                $("#description").focus();
+              }
+            }
+          }
+          else {
+            recette = validatedData.recette;
+            // TODO: une seule image pour l'instant...
+            var file = event.target.imageFile.files[0];
 
-          var result = this.result //assign the result, if you console.log(result), you get {}
-          //var buffer = new Uint8Array(result) // convert to binary
-          Meteor.call("saveRecette", event.target.titre.value, event.target.description.value, typeName, result);
+            // drop zone
+            if (file == undefined && files != undefined)
+              file = files[0];
 
-        alert('Recette créée !');
+            var reader = new FileReader();
 
-        event.target.titre.value = "";
-        event.target.description.value = "";
-      };
+            reader.onload = function(evt){
 
-      if (file != undefined)
-        reader.readAsDataURL(file);
-      else { // TODO: code redondant...
+                recette.imageUrl = this.result;
 
-      Meteor.call("saveRecette", event.target.titre.value, event.target.description.value, typeName, null);
+                Meteor.call("saveRecette", recette, function(error, result) {
+                  if (error) {
+                    alert('Erreur lors de l\'enregistrement !');
+                  }
+                  else {
+                    alert('Recette créée !');
+                    event.target.titre.value = "";
+                    event.target.description.value = "";
+                  }
+                });
+            };
 
-        alert('Recette créée !');
+            if (file != undefined)
+              reader.readAsDataURL(file);
+            else {
+              Meteor.call("saveRecette", recette, function(error, result) {
+                if (error) {
+                  alert('Erreur lors de l\'enregistrement !');
+                }
+                else {
+                  alert('Recette créée !');
+                  event.target.titre.value = "";
+                  event.target.description.value = "";
+                }
+              });
+            }
+          }
 
-        event.target.titre.value = "";
-        event.target.description.value = "";
-      }
-
-      return false;
+          return false;
   	},
 
   	'click #button-add-ingredient' : function(event){
   		$('#tbody-ingredients').append('<tr>'
   							+ '<td><input class="form-control" name="ingredient" placeholder="Nouvel ingrédient" style="width:700px;"></td>'
-  							+ '<td style="padding:10px;"><img class="button-remove" src="/img/remove.png" style="width:20%;height:20%;cursor:pointer;" /></td>'
+  							+ '<td style="padding:10px;"><img class="button-remove" src="/img/remove.png" style="cursor:pointer;" /></td>'
   						  + '</tr>');
   	},
 
   	'click #button-add-etape' : function(event){
   		$('#tbody-etapes').append('<tr>'
   							+ '<td><input class="form-control" name="etape" placeholder="Nouvelle étape" style="width:700px;"></td>'
-  							+ '<td style="padding:10px;"><img class="button-remove" src="/img/remove.png" style="width:20%;height:20%;cursor:pointer;" /></td>'
+  							+ '<td style="padding:10px;"><img class="button-remove" src="/img/remove.png" style="cursor:pointer;" /></td>'
   						  + '</tr>');
   	},
 

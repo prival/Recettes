@@ -24,7 +24,7 @@ if (Meteor.isClient) {
       alert('Ingrédient supprimé !');
   	},
 		// affiche si ingrédient existe déjà
-    'keyup #input-new-ingredient' : function(event){
+    'keyup #libelle-ingredient' : function(event){
 
       if (Ingredients.findOne({libelle: event.target.value})) {
         $('#alert-ingredient').css('display','inline');
@@ -39,11 +39,35 @@ if (Meteor.isClient) {
 		// save ingrédient
     'submit #form-new-ingredient' : function(){
 
-			Meteor.call('saveIngredient', event.target.libelle.value);
+      event.preventDefault();
 
-      event.target.libelle.value = "";
+      var ingredient = {
+        libelle: event.target.libelle.value
+      };
 
-      return false;
+			var validatedData = Ingredients.validate(ingredient);
+
+			if (validatedData.errors) {
+				$("#alert-ingredient").html('');
+				var isFocused = false;
+
+				if (validatedData.errors['libelle']) {
+					$("#alert-ingredient").html(validatedData.errors['libelle']);
+					isFocused = true;
+					$("#libelle-ingredient").focus();
+				}
+			}
+			else {
+				ingredient = validatedData.ingredient;
+				Meteor.call('saveIngredient', ingredient, function(error, result) {
+					if (error) {
+						alert('Erreur lors de l\'enregistrement !');
+					}
+					else {
+						event.target.libelle.value = "";
+					}
+				});
+			}
     }
 	});
 }

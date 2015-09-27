@@ -2,6 +2,38 @@
 Recettes = new Mongo.Collection("recettes");
 Ingredients = new Mongo.Collection("ingredients");
 
+// valide le bon format d'une recette
+Recettes.validate = function(recette) {
+	recette.titre = recette.titre.trim();
+	recette.description = recette.description.trim();
+
+	var errors = {};
+	if (!recette.titre)
+		errors['titre'] = 'Le titre de la recette ne doit pas être vide.'
+	else if (recette.titre.length > 200)
+		errors['titre'] = 'Le titre ne doit pas excéder 200 caractères.'
+
+	if (recette.description.length > 1000)
+		errors['description'] = 'La description ne doit pas excéder 1000 caractères.'
+
+	return { errors: _.isEmpty(errors) ? undefined : errors, recette: recette };
+}
+
+// valide le bon format d'un ingrédient
+Ingredients.validate = function(ingredient) {
+	ingredient.libelle = ingredient.libelle.trim();
+
+	var errors = {};
+	if (!ingredient.libelle)
+		errors['titre'] = 'Le libelle de l\'ingrédient ne doit pas être vide.'
+	else if (ingredient.libelle.length > 200)
+		errors['titre'] = 'Le libelle ne doit pas excéder 200 caractères.'
+
+	// faire Meteor.call findOne existe déjà...
+
+	return { errors: _.isEmpty(errors) ? undefined : errors, recette: recette };
+}
+
 if (Meteor.isClient) {
   	// This code only runs on the client
 
