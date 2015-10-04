@@ -9,7 +9,7 @@ Meteor.methods({
 
     if (!validatedData.errors) {
       recette = validatedData.recette;
-      Recettes.insert({
+      return Recettes.insert({
         titre: recette.titre,
         description: recette.description,
         type: recette.typeRecette,

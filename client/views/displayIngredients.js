@@ -25,15 +25,16 @@ if (Meteor.isClient) {
   	},
 		// affiche si ingrédient existe déjà
     'keyup #libelle-ingredient' : function(event){
-
-      if (Ingredients.findOne({libelle: event.target.value})) {
-        $('#alert-ingredient').css('display','inline');
-				$('#submit-new-ingredient').attr('disabled', 'disabled');
-      }
-      else {
-        $('#alert-ingredient').css('display','none');
-				$('#submit-new-ingredient').remove('disabled');
-      }
+			Meteor.call('findByLibelle', event.target.value, function(error, result) {
+	      if (result) {
+	        $('#alert-ingredient').css('display','inline');
+					$('#submit-new-ingredient').attr('disabled', 'disabled');
+	      }
+	      else {
+	        $('#alert-ingredient').css('display','none');
+					$('#submit-new-ingredient').remove('disabled');
+	      }
+			});
     },
 
 		// save ingrédient

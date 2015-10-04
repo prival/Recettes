@@ -31,7 +31,7 @@ Ingredients.validate = function(ingredient) {
 
 	// faire Meteor.call findOne existe déjà...
 
-	return { errors: _.isEmpty(errors) ? undefined : errors, recette: recette };
+	return { errors: _.isEmpty(errors) ? undefined : errors, ingredient: ingredient };
 }
 
 if (Meteor.isClient) {

@@ -67,10 +67,23 @@ if (Meteor.isClient) {
 
           event.preventDefault();
 
+          // var ingredients = event.target.ingredient;
+          // var idIngredients = [];
+          //
+          // var i=0;
+          // for (i; i<ingredients.length;i++) {
+          //   if (ingredients[i].value.trim()!='') {
+          //     Method.call('saveOrGetIngredient', ingredients[i].value.trim(), function(error, result) {
+          //
+          //     });
+          //   }
+          // }
+
           var recette = {
             typeRecette: Session.get("type_recette"),
             titre: event.target.titre.value,
-            description: event.target.description.value
+            description: event.target.description.value,
+            // ingredients:
           };
 
           // validation côté client et serveur
