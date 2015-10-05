@@ -15,10 +15,7 @@ Meteor.methods({
     var validatedData = Ingredients.validate(ingredient);
 
     if (!validatedData.errors) {
-      return Ingredients.insert({
-        libelle: ingredient.libelle,
-        createdAt: new Date()
-      });
+      return Ingredients.insert(validatedData.ingredient);
     }
     else {
       throw new Meteor.Error('save', 'Erreur lors de l\'enregistrement.');
@@ -31,10 +28,14 @@ Meteor.methods({
           return result._id;
       }
       else {
-        return Ingredients.insert({
-          libelle: libelle,
-          createdAt: new Date()
-        });
+        var ingredient = {libelle: libelle};
+        var validatedData = Ingredients.validate(ingredient);
+        if (!validatedData.errors) {
+          return Ingredients.insert(validatedData.ingredient);
+        }
+        else {
+          throw new Meteor.Error('save', 'Erreur lors de l\'enregistrement.');
+        }
       }
   },
 

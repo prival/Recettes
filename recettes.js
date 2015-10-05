@@ -6,6 +6,7 @@ Ingredients = new Mongo.Collection("ingredients");
 Recettes.validate = function(recette) {
 	recette.titre = recette.titre.trim();
 	recette.description = recette.description.trim();
+	recette.createdAt = new Date();
 
 	var errors = {};
 	if (!recette.titre)
@@ -22,6 +23,7 @@ Recettes.validate = function(recette) {
 // valide le bon format d'un ingrédient
 Ingredients.validate = function(ingredient) {
 	ingredient.libelle = ingredient.libelle.trim();
+	ingredient.createdAt = new Date();
 
 	var errors = {};
 	if (!ingredient.libelle)
