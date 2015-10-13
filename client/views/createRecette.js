@@ -109,12 +109,9 @@ if (Meteor.isClient) {
           }
           else {
             recette = validatedData.recette;
+			
             // TODO: une seule image pour l'instant...
-            var file = event.target.imageFile.files[0];
-
-            // drop zone
-            if (file == undefined && files != undefined)
-              file = files[0];
+            var file = files[0];
 
             var reader = new FileReader();
 
