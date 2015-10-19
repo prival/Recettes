@@ -1,17 +1,17 @@
-<template name="displayRecette">
+<template name="editRecette">
   <div class="row">
       <div class="col-lg-11">
 
 <h1 class="page-header">
-  <label id="label-titre">{{titre}}</label>
-  <button id="button-edit" type="button" class="btn btn-default btn-lg">
+<input class="form-control" id="titre" name="titre" value="{{titre}}">
+  <button type="button" class="btn btn-default btn-lg">
     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer
   </button>
 </h1>
   <br>
   <img src="{{imageUrl}}" />
   <br><br>
-<label id="label-description">{{description}}</label>
+  <textarea class="form-control" id="description" name="description" value="{{description}}"></textarea>
 <br><br>
 
       </div>

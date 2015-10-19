@@ -20,12 +20,12 @@ if (Meteor.isClient) {
   	},
 		// supprime ingrédient
     'click .button-remove' : function(event){
-  		Meteor.call('deleteIngredient',this._id);
+  		Meteor.call('ingredient/remove',this._id);
       alert('Ingrédient supprimé !');
   	},
 		// affiche si ingrédient existe déjà
-    'keyup #libelle-ingredient' : function(event){
-			Meteor.call('findByLibelle', event.target.value, function(error, result) {
+    'input #libelle-ingredient' : function(event){
+			Meteor.call('ingredient/findByLibelle', event.target.value, function(error, result) {
 	      if (result) {
 	        $('#alert-ingredient').css('display','inline');
 					$('#submit-new-ingredient').attr('disabled', 'disabled');
@@ -60,7 +60,7 @@ if (Meteor.isClient) {
 			}
 			else {
 				ingredient = validatedData.ingredient;
-				Meteor.call('saveIngredient', ingredient, function(error, result) {
+				Meteor.call('ingredient/save', ingredient, function(error, result) {
 					if (error) {
 						alert('Erreur lors de l\'enregistrement !');
 					}

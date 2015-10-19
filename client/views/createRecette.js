@@ -30,6 +30,9 @@ if (Meteor.isClient) {
 
     Template.createRecette.rendered = function() {
 
+      // autocompletion
+      Meteor.typeahead.inject();
+
       var dropZone = document.getElementById('drop_zone');
       dropZone.addEventListener('dragover', handleDragOver, false);
       dropZone.addEventListener('drop', handleFileSelect, false);
@@ -57,19 +60,35 @@ if (Meteor.isClient) {
           else {
             Router.go('/');
           }
-  			}
-  	});
+  			},
+
+        ingredients: function() {
+          return Ingredients.find().fetch().map(function(it){ return it.libelle; });
+        }
+      });
 
 
   	Template.createRecette.events({
+
+      // affiche si ingrédient existe déjà
+      'input .ingredient' : function(event){
+  			Meteor.call('ingredient/findByLibelle', event.target.value, function(error, result) {
+  	      if (result) {
+            $(event.target).parent().parent().next().html('<span class="color-red">Ingrédient déjà enregistré</span>');
+  	      }
+  	      else {
+            $(event.target).parent().parent().next().html('');
+  	      }
+  			});
+      },
 
       'submit #new-recette' : function(event){
 
           event.preventDefault();
 
-          // var ingredients = event.target.ingredient;
-          // var idIngredients = [];
-          //
+          var ingredients = event.target.ingredient;
+          var idIngredients = [];
+
           // var i=0;
           // for (i; i<ingredients.length;i++) {
           //   if (ingredients[i].value.trim()!='') {
@@ -99,7 +118,7 @@ if (Meteor.isClient) {
               isFocused = true;
               $("#titre").focus();
             }
-            if (validatedData.errors['description']) {
+            if (validatedData.errors['description'  ]) {
               $("#error-description").html(validatedData.errors['description']);
               if (!isFocused) {
                 isFocused = true;
@@ -109,9 +128,11 @@ if (Meteor.isClient) {
           }
           else {
             recette = validatedData.recette;
-			
+
             // TODO: une seule image pour l'instant...
-            var file = files[0];
+            var file = null;
+            if (files != undefined)
+              var file = files[0];
 
             var reader = new FileReader();
 
@@ -151,10 +172,14 @@ if (Meteor.isClient) {
   	},
 
   	'click #button-add-ingredient' : function(event){
-  		$('#tbody-ingredients').append('<tr>'
-  							+ '<td><input class="form-control" name="ingredient" placeholder="Nouvel ingrédient" style="width:700px;"></td>'
-  							+ '<td style="padding:10px;"><img class="button-remove" src="/img/remove.png" style="cursor:pointer;" /></td>'
-  						  + '</tr>');
+      var row = $('<tr><td></td><td style="padding:10px;"><img class="button-remove" src="/img/remove.png" style="cursor:pointer;" /></td></tr>');
+      var input = $('<input class="ingredient form-control typeahead" name="ingredient" placeholder="Nouvel ingrédient" data-source="ingredients" style="width:700px;">');
+      $('td:first', row).append(input);
+
+  		$('#tbody-ingredients').append(row);
+
+      // active l'autocompletion
+      Meteor.typeahead.inject('.typeahead:last');
   	},
 
   	'click #button-add-etape' : function(event){

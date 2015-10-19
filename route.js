@@ -18,6 +18,17 @@ this.render('displayRecette', {
   name: 'displayRecette'
 });
 
+Router.route('/editRecette/:_id', function () {
+
+this.render('editRecette', {
+  data: function() {
+    return Recettes.findOne({_id: this.params._id});
+  }
+});
+},{
+  name: 'editRecette'
+});
+
 Router.route('/createRecette', function () {
   this.render('createRecette');
 });

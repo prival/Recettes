@@ -9,3 +9,4 @@ iron:router
 sanjo:jasmine
 velocity:html-reporter
 sergeyt:typeahead
+twbs:bootstrap

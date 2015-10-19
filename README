@@ -10,5 +10,11 @@ public : images, fonts, etc. accessibles depuis /
 client : css et js partie client
 
 
-
-Utilisation de sergeyt:typeahead pour l'autocomplétion.
+packages
+--------
+iron:router             1.0.9* Routing specifically designed for Meteor
+meteor-platform         1.2.2* Include a standard set of Meteor packages in your app
+sanjo:jasmine           0.18.0* Velocity integration of the Jasmine testing framework
+sergeyt:typeahead       0.11.1_4* Autocomplete package for meteor powered by twitter typeahe...
+twbs:bootstrap          3.3.5  The most popular front-end framework for developing responsiv...
+velocity:html-reporter  0.8.2* Reactive Velocity test reports in your app.

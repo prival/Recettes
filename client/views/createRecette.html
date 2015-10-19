@@ -19,10 +19,10 @@
 			         <br>
             <span id="button-add-ingredient" style="cursor:pointer;"><img src="/img/add.png" style="width:2%;height:2%;padding:5px;" />Ajouter un ingrédient</span>
             <br><br>
-            <table>
+            <table id="table-padding">
               <tbody id="tbody-ingredients">
                 <tr>
-                  <td><input class="form-control" name="ingredient" placeholder="nouvel ingrédient" style="width:700px;"></td>
+                  <td><input class="ingredient form-control typeahead" name="ingredient" placeholder="nouvel ingredient" data-source="ingredients" style="width:700px;"></td>
                   <td></td>
                 </tr>
               </tbody>
