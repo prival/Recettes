@@ -71,32 +71,31 @@ if (Meteor.isClient) {
   	Template.createRecette.events({
 
       // affiche si ingrédient existe déjà
-      'input .ingredient' : function(event){
-  			Meteor.call('ingredient/findByLibelle', event.target.value, function(error, result) {
-  	      if (result) {
-            $(event.target).parent().parent().next().html('<span class="color-red">Ingrédient déjà enregistré</span>');
-  	      }
-  	      else {
-            $(event.target).parent().parent().next().html('');
-  	      }
-  			});
-      },
+      // 'input .ingredient' : function(event){
+  			// Meteor.call('ingredient/findByLibelle', event.target.value, function(error, result) {
+  	      // if (result) {
+            // $(event.target).parent().parent().next().html('<span class="color-green">Ingrédient existant</span>');
+  	      // }
+  	      // else {
+            // $(event.target).parent().parent().next().html('');
+  	      // }
+  			// });
+      // },
 
       'submit #new-recette' : function(event){
-
           event.preventDefault();
 
-          var ingredients = event.target.ingredient;
+          var ingredients = $(event.target.ingredient);
           var idIngredients = [];
 
-          // var i=0;
-          // for (i; i<ingredients.length;i++) {
-          //   if (ingredients[i].value.trim()!='') {
-          //     Method.call('saveOrGetIngredient', ingredients[i].value.trim(), function(error, result) {
-          //
-          //     });
-          //   }
-          // }
+          var i=0;
+          for (i; i<ingredients.size();i++) {
+            if (ingredients[i].value.trim()!='') {
+              Method.call('ingredient/findOrSave', ingredients[i].value.trim(), function(error, result) {
+          alert(result);
+              });
+            }
+          }
 
           var recette = {
             typeRecette: Session.get("type_recette"),
@@ -106,67 +105,67 @@ if (Meteor.isClient) {
           };
 
           // validation côté client et serveur
-          var validatedData = Recettes.validate(recette);
+          // var validatedData = Recettes.validate(recette);
 
-          if (validatedData.errors) {
-            $("#error-titre").html('');
-            $("#error-description").html('');
-            var isFocused = false;
+          // if (validatedData.errors) {
+            // $("#error-titre").html('');
+            // $("#error-description").html('');
+            // var isFocused = false;
 
-            if (validatedData.errors['titre']) {
-              $("#error-titre").html(validatedData.errors['titre']);
-              isFocused = true;
-              $("#titre").focus();
-            }
-            if (validatedData.errors['description'  ]) {
-              $("#error-description").html(validatedData.errors['description']);
-              if (!isFocused) {
-                isFocused = true;
-                $("#description").focus();
-              }
-            }
-          }
-          else {
-            recette = validatedData.recette;
+            // if (validatedData.errors['titre']) {
+              // $("#error-titre").html(validatedData.errors['titre']);
+              // isFocused = true;
+              // $("#titre").focus();
+            // }
+            // if (validatedData.errors['description'  ]) {
+              // $("#error-description").html(validatedData.errors['description']);
+              // if (!isFocused) {
+                // isFocused = true;
+                // $("#description").focus();
+              // }
+            // }
+          // }
+          // else {
+            // recette = validatedData.recette;
 
             // TODO: une seule image pour l'instant...
-            var file = null;
-            if (files != undefined)
-              var file = files[0];
+            // var file = null;
+            // if (files != undefined)
+              // var file = files[0];
 
-            var reader = new FileReader();
+            // var reader = new FileReader();
 
-            reader.onload = function(evt){
+            // reader.onload = function(evt){
 
-                recette.imageUrl = this.result;
+                // recette.imageUrl = this.result;
 
-                Meteor.call("saveRecette", recette, function(error, result) {
-                  if (error) {
-                    alert('Erreur lors de l\'enregistrement !');
-                  }
-                  else {
-                    alert('Recette créée !');
-                    event.target.titre.value = "";
-                    event.target.description.value = "";
-                  }
-                });
-            };
+                // Meteor.call("saveRecette", recette, function(error, result) {
+                  // if (error) {
+                    // alert('Erreur lors de l\'enregistrement !');
+                  // }
+                  // else {
+                    // alert('Recette créée !');
+                    // event.target.titre.value = "";
+                    // event.target.description.value = "";
+                  // }
+                // });
+            // };
 
-            if (file != undefined)
-              reader.readAsDataURL(file);
-            else {
-              Meteor.call("saveRecette", recette, function(error, result) {
-                if (error) {
-                  alert('Erreur lors de l\'enregistrement !');
-                }
-                else {
-                  alert('Recette créée !');
-                  event.target.titre.value = "";
-                  event.target.description.value = "";
-                }
-              });
-            }
-          }
+            // if (file != undefined)
+              // reader.readAsDataURL(file);
+            // else {
+              // Meteor.call("saveRecette", recette, function(error, result) {
+                // if (error) {
+                  // alert('Erreur lors de l\'enregistrement !');
+                // }
+                // else {
+                  // alert('Recette créée !');
+                  // event.target.titre.value = "";
+                  // event.target.description.value = "";
+                // }
+              // });
+            // }
+          // }
 
           return false;
   	},

@@ -3,7 +3,7 @@ if (Meteor.isClient) {
 
     Template.displayRecette.events({
 
-      'click .delete' : function(){
+      'click #button-delete' : function(){
   			if (confirm('Confirmer ?'))
   				Meteor.call('deleteRecette', this._id);
       },
@@ -20,7 +20,13 @@ if (Meteor.isClient) {
         var textDescription = $('#label-description').html();
         $('#label-description').replaceWith('<textarea class="form-control" id="description" name="description"'
                   +' style="width:'+widthDescription+'px;height:'+heightDescription+'">'+textDescription+'</textarea>');
-  			// Router.go('editRecette', {_id: this._id});
-      }
+  		
+		// bouton enregistrer
+		$('#button-delete').replaceWith('<button type="submit" id="button-save" class="btn btn-success btn-lg sharp">Enregistrer</button>');
+      },
+	  
+      'click #button-save' : function(){
+  			alert(this._id);
+      },
   	});
 }

@@ -38,10 +38,9 @@ if (Meteor.isClient) {
     },
 
 		// save ingrédient
-    'submit #form-new-ingredient' : function(){
-
-      event.preventDefault();
-
+    'submit #form-new-ingredient' : function(event){
+		event.preventDefault();
+	
       var ingredient = {
         libelle: event.target.libelle.value
       };
