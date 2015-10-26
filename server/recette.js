@@ -11,8 +11,9 @@ Meteor.methods({
       recette = validatedData.recette;
       return Recettes.insert({
         titre: recette.titre,
-        description: recette.description,
         type: recette.typeRecette,
+        description: recette.description,
+        ingredients: recette.ingredients,
         imageUrl: recette.imageUrl,
         createdAt: new Date()
       });

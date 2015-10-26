@@ -1,19 +1,36 @@
 <template name="displayRecette">
+  <script>
+  $(window).on('unload', function() {
+         alert('wadsfghfj');
+    });
+  </script>
   <div class="row">
       <div class="col-lg-11">
 
-<h1 class="page-header">
-  <label id="label-titre">{{titre}}</label>
-  <button id="button-edit" type="button" class="btn btn-default btn-lg">
-    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer
-  </button>
-</h1>
-  <br>
-  <img src="{{imageUrl}}" />
-  <br><br>
-<label id="label-description">{{description}}</label>
-<br><br>
+        <h3 class="page-header">
+          <label id="label-titre">{{titre}}</label>
+          <button id="button-edit" type="button" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editer
+          </button>
+        </h3>
+        <br>
 
+        <!-- images -->
+        {{#unless isImagesEmpty imageUrl}}
+        <img src="{{imageUrl}}" />
+        <br><br>
+        {{/unless}}
+
+        <!-- description -->
+        {{#unless isDescriptionEmpty description}}
+        <label id="label-description">{{description}}</label>
+        <br><br>
+        {{/unless}}
+
+        <!-- ingredients -->
+        <h5>Ingrédients</h5>
+        <label id="label-ingredients">{{ingredientsLibelles}}</label>
+        <br><br>
       </div>
       <!-- /.col-lg -->
   </div>

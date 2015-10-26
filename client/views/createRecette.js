@@ -71,103 +71,110 @@ if (Meteor.isClient) {
   	Template.createRecette.events({
 
       // affiche si ingrédient existe déjà
-      // 'input .ingredient' : function(event){
-  			// Meteor.call('ingredient/findByLibelle', event.target.value, function(error, result) {
-  	      // if (result) {
-            // $(event.target).parent().parent().next().html('<span class="color-green">Ingrédient existant</span>');
-  	      // }
-  	      // else {
-            // $(event.target).parent().parent().next().html('');
-  	      // }
-  			// });
-      // },
+      /*
+      'input .ingredient' : function(event){
+  			Meteor.call('ingredient/findByLibelle', event.target.value, function(error, result) {
+  	      if (result) {
+            $(event.target).parent().parent().next().html('<span class="color-green">Ingrédient existant</span>');
+  	      }
+  	      else {
+            $(event.target).parent().parent().next().html('');
+  	      }
+  			});
+      },
+      */
 
       'submit #new-recette' : function(event){
-          event.preventDefault();
+        event.preventDefault();
 
+        var recette = {
+          typeRecette: Session.get("type_recette"),
+          titre: event.target.titre.value,
+          description: event.target.description.value
+        };
+
+        // validation côté client
+        var validatedData = Recettes.validate(recette);
+
+        // gestion erreurs
+        if (validatedData.errors) {
+          $("#error-titre").html('');
+          $("#error-description").html('');
+          var isFocused = false;
+
+          if (validatedData.errors['titre']) {
+            $("#error-titre").html(validatedData.errors['titre']);
+            isFocused = true;
+            $("#titre").focus();
+          }
+          if (validatedData.errors['description'  ]) {
+            $("#error-description").html(validatedData.errors['description']);
+            if (!isFocused) {
+              isFocused = true;
+              $("#description").focus();
+            }
+          }
+        }
+        else {
+          // enregistrement
+          // ingredients
           var ingredients = $(event.target.ingredient);
-          var idIngredients = [];
 
+          var ingredientsLibelles = [];
           var i=0;
           for (i; i<ingredients.size();i++) {
-            if (ingredients[i].value.trim()!='') {
-              Method.call('ingredient/findOrSave', ingredients[i].value.trim(), function(error, result) {
-          alert(result);
-              });
+            var libelle = ingredients[i].value.trim();
+            if (libelle!='') {
+                ingredientsLibelles.push(libelle);
             }
           }
 
-          var recette = {
-            typeRecette: Session.get("type_recette"),
-            titre: event.target.titre.value,
-            description: event.target.description.value,
-            // ingredients:
-          };
+          Meteor.call('ingredient/findOrSaveMany', ingredientsLibelles, function(error, result) {
+            if (!error) {
+              recette = validatedData.recette;
+              recette.ingredients = result;
 
-          // validation côté client et serveur
-          // var validatedData = Recettes.validate(recette);
+              // TODO: une seule image pour l'instant...
+              var file = null;
+              if (files != undefined)
+                var file = files[0];
 
-          // if (validatedData.errors) {
-            // $("#error-titre").html('');
-            // $("#error-description").html('');
-            // var isFocused = false;
+              var reader = new FileReader();
 
-            // if (validatedData.errors['titre']) {
-              // $("#error-titre").html(validatedData.errors['titre']);
-              // isFocused = true;
-              // $("#titre").focus();
-            // }
-            // if (validatedData.errors['description'  ]) {
-              // $("#error-description").html(validatedData.errors['description']);
-              // if (!isFocused) {
-                // isFocused = true;
-                // $("#description").focus();
-              // }
-            // }
-          // }
-          // else {
-            // recette = validatedData.recette;
+              reader.onload = function(evt) {
+                recette.imageUrl = this.result;
 
-            // TODO: une seule image pour l'instant...
-            // var file = null;
-            // if (files != undefined)
-              // var file = files[0];
+                // sauvegarde avec image
+                Meteor.call("saveRecette", recette, function(error, result) {
+                  if (error) {
+                    alert('Erreur lors de l\'enregistrement !');
+                  }
+                  else {
+                    alert('Recette créée !');
+                    event.target.titre.value = "";
+                    event.target.description.value = "";
+                  }
+                });
+              };
 
-            // var reader = new FileReader();
-
-            // reader.onload = function(evt){
-
-                // recette.imageUrl = this.result;
-
-                // Meteor.call("saveRecette", recette, function(error, result) {
-                  // if (error) {
-                    // alert('Erreur lors de l\'enregistrement !');
-                  // }
-                  // else {
-                    // alert('Recette créée !');
-                    // event.target.titre.value = "";
-                    // event.target.description.value = "";
-                  // }
-                // });
-            // };
-
-            // if (file != undefined)
-              // reader.readAsDataURL(file);
-            // else {
-              // Meteor.call("saveRecette", recette, function(error, result) {
-                // if (error) {
-                  // alert('Erreur lors de l\'enregistrement !');
-                // }
-                // else {
-                  // alert('Recette créée !');
-                  // event.target.titre.value = "";
-                  // event.target.description.value = "";
-                // }
-              // });
-            // }
-          // }
-
-          return false;
+              if (file != undefined)
+                reader.readAsDataURL(file);
+              else {
+                // sauvegarde sans image
+                Meteor.call("saveRecette", recette, function(error, result) {
+                  if (error) {
+                    alert('Erreur lors de l\'enregistrement !');
+                  }
+                  else {
+                    alert('Recette créée !');
+                    event.target.titre.value = "";
+                    event.target.description.value = "";
+                  }
+                });
+              }
+            }
+          });
+        }
   	},
 
   	'click #button-add-ingredient' : function(event){

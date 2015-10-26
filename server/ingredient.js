@@ -22,21 +22,28 @@ Meteor.methods({
     }
   },
 
-  'ingredient/findOrSave': function(libelle) {
-     var result = Meteor.call('ingredient/findByLibelle', libelle);
-      if (result) {
-          return result._id;
+  'ingredient/findOrSaveMany': function(libelles) {
+    var result = [];
+    var i = 0;
+    for (i; i<libelles.length;i++) {
+     libelle = libelles[i];
+     var ingredient = Meteor.call('ingredient/findByLibelle', libelle);
+      if (ingredient) {
+          result.push(ingredient._id);
       }
       else {
         var ingredient = {libelle: libelle};
         var validatedData = Ingredients.validate(ingredient);
         if (!validatedData.errors) {
-          return Ingredients.insert(validatedData.ingredient);
+          var id = Ingredients.insert(validatedData.ingredient);
+          result.push(id);
         }
         else {
           throw new Meteor.Error('save', 'Erreur lors de l\'enregistrement.');
         }
       }
+    }
+    return result;
   },
 
   'ingredient/remove': function(id) {
